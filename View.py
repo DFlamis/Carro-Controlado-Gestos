@@ -1,3 +1,4 @@
+from cgitb import text
 from pydoc import Helper
 from tkinter import CENTER
 import pygame as pyg
@@ -10,7 +11,7 @@ pyg.init() #Pygame inicializa
 display_size = 1280, 720
 display = pyg.display.set_mode(display_size)
 
-pyg.display.set_caption("Tester View") #Titulo de ventana
+pyg.display.set_caption("Map View - Celula/Mecatronica") #Titulo de ventana
 
 width = 1280
 height = 720
@@ -18,9 +19,17 @@ height = 720
 #Some stuffs
 
 player_points = 1000
-points_losted = 0.017
+timer = 0
 
-FPS = 60
+points_losted_per_second = 1
+points_losted_per_tick = points_losted_per_second / 60
+
+color_text = (255,255,255)
+
+font = pyg.font.SysFont('Consolas',20)
+# screen_points = font.render(points_losted_text, True, color_text)
+
+fps = 60
 angle = 0
 rotation = 1
 speed = 3
@@ -116,11 +125,11 @@ while run:
 
     #Colisiones
     if pyg.sprite.spritecollide( Car_spr.sprite,Top_spr,False,pyg.sprite.collide_mask):
-        player_points -= points_losted
+        player_points -= points_losted_per_tick
         print('Chocaste con la pared TOP')
 
     if pyg.sprite.spritecollide( Car_spr.sprite,Bot_spr,False,pyg.sprite.collide_mask):
-        player_points -= points_losted
+        player_points -= points_losted_per_tick
         print('Chocaste con la pared BOT')
 
     if pyg.sprite.spritecollide( Car_spr.sprite,Goal_spr,False,pyg.sprite.collide_mask):
@@ -128,12 +137,22 @@ while run:
     
     print( f'Points: {player_points}' )
 
+    points_losted_text = 'Puntos: ' + str( round(player_points) )
+    screen_points = font.render(points_losted_text, True, color_text)
+
+    timer = pyg.time.get_ticks() / 1000
+    timer_text = 'Tiempo: ' + str( timer )
+    screen_timer = font.render( timer_text, True, color_text )
+
+
     #Agregar imagenes
     display.blit( Background_setter[0], Background_setter[1] )
+    display.blit( screen_points, (150,10) )
+    display.blit( screen_timer, (980,10) )
 
     Car_spr.draw( display )
 
     pyg.display.flip()
-    clock.tick(60)
+    clock.tick( fps )
 
 pyg.quit
