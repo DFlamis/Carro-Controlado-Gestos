@@ -24,10 +24,11 @@ timer = 0
 points_losted_per_second = 1
 points_losted_per_tick = points_losted_per_second / 60
 
-color_text = (255,255,255)
+color_text = (255,255,255)              
 
 font = pyg.font.SysFont('Consolas',20)
-# screen_points = font.render(points_losted_text, True, color_text)
+
+root_path = 'Player_Resources/'
 
 fps = 60
 angle = 0
@@ -45,21 +46,21 @@ def setImage(coord,path):
 class Top_Sprait(pyg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pyg.image.load( 'Resources/Top.png' ).convert_alpha()
+        self.image = pyg.image.load( root_path + 'Top.png' ).convert_alpha()
         self.rect = self.image.get_rect(center = (640,270))
         self.mask = pyg.mask.from_surface(self.image)
 
 class Bot_Sprait(pyg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pyg.image.load( 'Resources/Bot.png' ).convert_alpha()
+        self.image = pyg.image.load( root_path + 'Bot.png' ).convert_alpha()
         self.rect = self.image.get_rect(center = (640,420))
         self.mask = pyg.mask.from_surface(self.image)
 
 class Goal_Sprait(pyg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pyg.image.load( 'Resources/Goal.png' ).convert_alpha()
+        self.image = pyg.image.load( root_path + 'Goal.png' ).convert_alpha()
         self.rect = self.image.get_rect(center = (72,360))
         self.mask = pyg.mask.from_surface(self.image)
 
@@ -67,12 +68,12 @@ class Goal_Sprait(pyg.sprite.Sprite):
 class Car_Sprait(pyg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pyg.image.load( 'Resources/Car.png' ).convert_alpha()
+        self.image = pyg.image.load( root_path + 'Car.png' ).convert_alpha()
         self.rect = self.image.get_rect(center = (1100,267)) #(1134,267)
         self.mask = pyg.mask.from_surface(self.image)
     
     def update(self, axis_x, axis_y, angle, center):
-        self.image = pyg.image.load( 'Resources/Car.png' ).convert_alpha()
+        self.image = pyg.image.load( root_path + 'Car.png' ).convert_alpha()
 
         self.rect.x += axis_x
         self.rect.y += axis_y
@@ -80,9 +81,6 @@ class Car_Sprait(pyg.sprite.Sprite):
         self.image = pyg.transform.rotate( self.image, angle )
 
         self.rect = self.image.get_rect( center = (center[0],center[1]) )
-
-#imagenes-------------------------------------------------------------------------------------
-root_path = 'Resources/'
 
 #Background------------------------------------------------
 Background_path = root_path + 'Track.png'
